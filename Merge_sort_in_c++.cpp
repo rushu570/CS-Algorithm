@@ -13,64 +13,25 @@ long long int input(){
     return n;
  
 }
-void merge(ll arr[], ll l, ll m, ll r) 
+void bucketSort(long double arr[],ll n) 
 { 
-    ll i, j, k; 
-    ll n1 = m - l + 1; 
-    ll n2 = r - m; 
+   
+    vector<long double> b[n]; 
 
-    ll L[n1], R[n2]; 
+    for (int i = 0; i < n; i++) { 
+        int bi = n * arr[i]; 
+        b[bi].push_back(arr[i]); 
+    } 
 
-    for (i = 0; i < n1; i++) 
-        L[i] = arr[l + i]; 
-    for (j = 0; j < n2; j++) 
-        R[j] = arr[m + 1 + j]; 
-  
-    
-    i = 0; 
-    j = 0; 
-    k = l; 
-    while (i < n1 && j < n2) { 
-        if (L[i] <= R[j]) { 
-            arr[k] = L[i]; 
-            i++; 
-        } 
-        else { 
-            arr[k] = R[j]; 
-            j++; 
-        } 
-        k++; 
-    } 
-  
-    while (i < n1) { 
-        arr[k] = L[i]; 
-        i++; 
-        k++; 
-    } 
-    while (j < n2) { 
-        arr[k] = R[j]; 
-        j++; 
-        k++; 
-    } 
+    for (int i = 0; i < n; i++) 
+        sort(b[i].begin(), b[i].end()); 
+
+    int index = 0; 
+    for (int i = 0; i < n; i++) 
+        for (int j = 0; j < b[i].size(); j++) 
+            arr[index++] = b[i][j]; 
 } 
 
-void mergeSort(ll arr[], ll l, ll r) 
-{ 
-    if (l < r) { 
-        ll m = l + (r - l) / 2; 
-        mergeSort(arr, l, m); 
-        mergeSort(arr, m + 1, r); 
-        merge(arr, l, m, r); 
-    } 
-} 
-  
-
-void printArray(ll arr[],ll n) 
-{ 
-    for (ll i = 0; i < n; i++) 
-        printf("%d ", arr[i]); 
-    printf("\n"); 
-} 
     
 int main() {
  
@@ -85,12 +46,15 @@ int main() {
     cin>>t;
     while(t--){
     ll n=input();
-    ll arr[n];
+    long double arr[n];
     loop(i,n){
         cin>>arr[i];
     }
-    mergeSort(arr,0,n-1);
-    printArray(arr,n);
+    bucketSort(arr,n);
+    loop(x,n){
+        cout<<arr[x]<<" ";
+    }
+   
     cout<<"\n";}
     
     
